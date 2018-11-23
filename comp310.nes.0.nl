@@ -1,0 +1,11 @@
+$C116#UpdatePlayer_NoClamp#
+$C109#UpdatePlayer_ClampToTop#
+$C017#vblankwait1#
+$C03C#vblankwait2#
+$C01D#clrmem#
+$C000#RESET#
+$C0AB#NMI#
+$C0BA#ReadController#
+$C0D7#ReadUp_Done#
+$C0A8#forever#
+$C10B#UpdatePlayer_DoClamping#

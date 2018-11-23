@@ -1,0 +1,12 @@
+; .\comp310.asm
+UpdatePlayer_NoClamp             = $C116
+UpdatePlayer_ClampToTop          = $C109
+vblankwait1                      = $C017
+vblankwait2                      = $C03C
+clrmem                           = $C01D
+RESET                            = $C000
+NMI                              = $C0AB
+ReadController                   = $C0BA
+ReadUp_Done                      = $C0D7
+forever                          = $C0A8
+UpdatePlayer_DoClamping          = $C10B
