@@ -103,6 +103,21 @@ vblankwait2:
 
     ; End of initialisation code
 
+	JSR InitialiseGame
+	
+    LDA #%10000000 ; Enable NMI
+    STA PPUCTRL
+
+    LDA #%00010000 ; Enable sprites
+    STA PPUMASK
+
+    ; Enter an infinite loop
+forever:
+    JMP forever
+
+; ---------------------------------------------------------------------------
+	
+InitialiseGame:   ; Begin subroutine
     ; Reset the PPU high/low latch
     LDA PPUSTATUS
 
@@ -154,20 +169,17 @@ vblankwait2:
     LDA #190    ; X position
     STA $0207
 
-    LDA #%10000000 ; Enable NMI
-    STA PPUCTRL
-
-    LDA #%00010000 ; Enable sprites
-    STA PPUMASK
-
-    ; Enter an infinite loop
-forever:
-    JMP forever
-
-; ---------------------------------------------------------------------------
+	RTS ; End subroutine
 
 ; NMI is called on every frame
 NMI:
+	; Increment x position of sprite
+    LDA $0207
+    CLC
+    ADC #-1
+    STA $0207
+
+
 	; Initialise controller 1
 	LDA #1
 	STA JOYPAD1
@@ -196,6 +208,7 @@ ReadController:
 	STA player_speed+1
 ReadUp_Done:
 
+
 	; Update player sprite
 	; First, update speed
 	LDA player_speed     ; Low 8 bits
@@ -205,7 +218,6 @@ ReadUp_Done:
 	LDA player_speed+1   ; High 8 bits
 	ADC #HIGH(GRAVITY)   ; NB: *don't* clear the carry flag!
 	STA player_speed+1
-	
 	
 	; Second, update position
 	LDA player_position_sub     ; Low 8 bits
